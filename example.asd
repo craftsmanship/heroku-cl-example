@@ -3,7 +3,8 @@
 (defsystem :example
     :name "example"
     :description "Example cl-heroku application"
-    :depends-on (:aserve 
+    ;; :depends-on (:aserve 
+    :depends-on (:hunchentoot
 		 :clsql :clsql-postgresql ;for database access
 		 :wuwei)		  ;for database demo
     :components
