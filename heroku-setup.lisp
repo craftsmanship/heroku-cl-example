@@ -2,11 +2,10 @@
 
 (print ">>> Building system....")
 
-(load (make-pathname :directory *build-dir* :defaults "example.asd"))
+(load (merge-pathnames "example.asd" *build-dir*))
 
 (ql:quickload :example)
 
-;;; Copy wuwei public files to build
-(wu:heroku-install-wupub-files)
+;;; Redefine / extend heroku-toplevel here if necessary.
 
 (print ">>> Done building system")
