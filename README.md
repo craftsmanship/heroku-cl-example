@@ -39,7 +39,7 @@ That's it! Use `heroku open` to view your app in your browser!
 
 ## More details:
 
-Currently https://github.com/jsmpereira/heroku-buildpack-cl let's you run Hunchentoot with SBCL and CCL and AllegroServe(portableaserve) with CCL.
+Currently https://github.com/craftsmanship/heroku-buildpack-cl.git let's you run Hunchentoot with SBCL and CCL and AllegroServe(portableaserve) with CCL.
 
 There is a pending issue with [acl-compat](https://github.com/mtravers/portableaserve/tree/master/acl-compat) bundled with portableaserve preventing use with SBCL. Look [here](https://github.com/mtravers/wuwei/issues/10) for more information.
 
