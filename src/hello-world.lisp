@@ -1,3 +1,6 @@
+(in-package :cl-user)
+(defvar *local* nil)
+
 (in-package :example)
 
 ;; Utils
@@ -6,16 +9,26 @@
   #+sbcl (sb-posix:getenv target))
 
 (defun heroku-slug-dir ()
-  (heroku-getenv "HOME"))
+  (if cl-user::*local*
+      "."
+      (heroku-getenv "HOME")))
 
 (defun db-params ()
   "Heroku database url format is postgres://username:password@host:port/database_name.
 TODO: cleanup code."
   (let* ((url (second (cl-ppcre:split "//" (heroku-getenv "DATABASE_URL"))))
-	 (user (first (cl-ppcre:split ":" (first (cl-ppcre:split "@" url)))))
-	 (password (second (cl-ppcre:split ":" (first (cl-ppcre:split "@" url)))))
-	 (host (first (cl-ppcre:split ":" (first (cl-ppcre:split "/" (second (cl-ppcre:split "@" url)))))))
-	 (database (second (cl-ppcre:split "/" (second (cl-ppcre:split "@" url))))))
+	 (user (if cl-user::*local*
+               (heroku-getenv 'PS_USER) ; get Postgres login user form env var.
+               (first (cl-ppcre:split ":" (first (cl-ppcre:split "@" url))))))
+	 (password (if cl-user::*local*
+                   (Heroku-getenv 'PS_PASS) ; get Postgres login password from env var.
+                    (second (cl-ppcre:split ":" (first (cl-ppcre:split "@" url))))))
+	 (host (if cl-user::*local*
+               "localhost" ; Postgres host name.
+                (first (cl-ppcre:split ":" (first (cl-ppcre:split "/" (second (cl-ppcre:split "@" url))))))))
+	 (database (if cl-user::*local*
+                   "heroku_cl_example"  ; Postgress database name.
+                    (second (cl-ppcre:split "/" (second (cl-ppcre:split "@" url)))))))
     (list database user password host)))
 
 ;; Handlers
