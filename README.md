@@ -15,7 +15,7 @@ Change directory into the heroku-cl-example.
 
 Next, create your own Heroku application using CL Buildpack:
 
-    heroku create -s cedar --buildpack http://github.com/jsmpereira/heroku-buildpack-cl.git
+    heroku create -s cedar --buildpack https://github.com/craftsmanship/heroku-buildpack-cl.git
 
 ```shell
 # Choose implementation:
